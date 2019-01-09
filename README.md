@@ -49,6 +49,7 @@ A new template optimized for your desired set of section axes can be made using
 the "Graph Paper" template in GoodNotes. Export your new PDF from GoodNotes and
 re-import it as a *Template* to use it as the basis for a notebook.
 
+
 ## Testing in the field
 
 We tested this stratigraphic measurement technique during summer 2018.
@@ -65,6 +66,8 @@ be kept as a backup, and a power bank should be carried at all times. Users shou
 expect to recharge the iPad nightly.
 
 # Stitching together a production section
+
+<img width="300" style="float:right;" src="images/test-output.png" />
 
 After returning from the field, you'll want to standardize your sections,
 remove extraneous annotation, and make them conform to a consistent graphical
@@ -103,7 +106,7 @@ Then, install the module to your system:
 ```
 
 Installation requires the `imagemagick` application to be available on your system,
-which can be tricky for windows users.
+which can be tricky for Windows users.
 ![Documentation for the *Wand* Python module](docs.wand-py.org/en/0.5.0/guide/install.html)
 may suggest ways to solve this issue.
 
