@@ -7,15 +7,16 @@ such as Illustrator or Procreate for completion.
 
 It includes a description of an iPad workflow for section-measuring,
 a set of PDF section axes to use as a GoodNotes template, and a command-line
-tool, `stack-section`, that stacks rendered section pages into a complete section. 
+tool, `stack-section`, that stacks rendered section pages into a complete column.
+Other tools can be added as needed.
 
 # The workflow: stratigraphic measurement in GoodNotes
 
 The iPad Pro, with its Apple Pencil, has the potential to completely change
-how we do field geology. One of the easiest ways to see its potential is to
-use it to measure a section in the field – gone are the days of tediously
+how we do field geology. One of the clearest demonstrations of its potential is
+using it to measure a section in the field – gone are the days of tediously
 scanning your field notebook, massive layouts in Photoshop, and finicky graphics
-tablets. Or giant sheets of vellum.
+tablets. Or transcribing onto sheets of vellum.
 
 Stylus-enabled note-taking apps allow drawing like paper on a consistent set
 of axes, in an intuitive and robust way. They also support progressive enhancement
@@ -25,42 +26,65 @@ field, you're much of the way to your publication-quality sections!
 [GoodNotes](https://www.goodnotes.com/) is one of the best note-taking apps
 we have encountered for the iPad, and the workflow described here is tailored to
 its use. Other note-taking apps like [Paper](https://paper.bywetransfer.com/)
-might also be useful, in which case the procedures and scripts
+might also be useful, and the tool(s) presented here can be modified to support
+their use.
 
 ## A standardized template
 
-Not having to re-label your axes every ~10-20 meters of stratigraphy is
-a huge time-saver in the field
+The first step to using GoodNotes for measurement is to create a stratigraphic
+template. Not having to re-label your axes every ~10-20 meters of stratigraphy is
+a huge time-saver in the field, and keeping the scale and page placement identical
+allows automated stitching and resizing of section images.
+A basic PDF template for a stratigraphic column
+is [included in this repository](images/section-template.pdf). This is
+based on the "Graph Paper" template in GoodNotes, which includes a 1 cm grid by
+default (given the page size of 5.82 x 7.42 in assigned by GoodNotes, which is
+generally smaller than the real size of your iPad's screen).
 
-A basic PDF template for a stratigraphic column is included in this
+To use this template, download it to the *Files* app on your iPad.
+Then, in GoodNotes, open the *Template Library* from *Options* > *Template Library*
+and then add the PDF to a folder of your choice.
 
-A new template optimized for your desired set of section axes can be made using the
-graph-paper preset in GoodNotes. Be sure to leave a one-large-box margin at the
-top and bottom of the section drawing area. If you want to change this margin,
-adjusting the script will be required. Export your new PDF from GoodNotes and
+A new template optimized for your desired set of section axes can be made using
+the "Graph Paper" template in GoodNotes. Export your new PDF from GoodNotes and
 re-import it as a *Template* to use it as the basis for a notebook.
 
-# Tool for stitching together a production section
+## Using it in the field
+
+We tested this stratigraphic measurement technique during summer 2018.
+Four teams with iPads measured ~5-10 sections over a 1.5-week field
+campaign in the Naukluft Mountains of Namibia. The technique helped a
+diverse group of workers maintain a consistent measurement scale and render
+detailed data. It also enabled sharing sections between groups in the evenings
+and easy daily backups using AirDrop. The iPads were pretty robust in the field.
+
+Screen use in direct sunlight was a present but not debilitating problem. More
+significant was the need to ensure a full day's use from the iPad, while it is
+under load with the screen on a high brightness setting. A field notebook should
+be kept as a backup, and a power bank should be carried at all times. Users should
+expect to recharge the iPad nightly.
+
+## Stitching together a production section
 
 After returning from the field, you'll want to standardize your sections,
 remove extraneous annotation, and make them conform to a consistent graphical
 style. This could mean artistic rendition and/or painting in patterns such as the
 [USGS FGDC Geologic Patterns](https://davenquinn.com/projects/geologic-patterns).
 
-At its core, this command-line tool stitches together sections that were created
-using the template
+The first (and currently, only) command-line tool in this toolkit is a Python-based
+script to stitch together sections that were created using the provided template
+(although it can be adapted to others). Parts of the Python code are an adaptation
+of earlier code that I wrote for collating sections from scanned images of
+field notebook pages. However, the standard size and orientation of a digital
+notebook page makes extraction of images from GoodNotes far easier.
 
-Parts of the Python code are an adaptation of earlier code that I wrote for assembling
-field sections of the Naukluft plateau from scanned images of field notebook pages.
-However, the standard size and orientation of a digital notebook page makes extraction
-of images from GoodNotes far easier.
-
-For reference, the maximum allowed single dimension for an image imported into
-Procreate is 16384 pixels; if an image exceeds this size, it will be
-scaled to fit. This is annoying, especially given that it is important
-to keep section images at the same scale for later use.
-
-
+The command line creates a tall image representing a completed section
+from all of the pages in the pdf, which are assumed to move upwards through
+the section. Optionally, the image will be split into several equal parts of
+less than a certain pixel height. This is helpful when reasonably-sized images
+are needed for loading into other software. For instance, for the iPad drawing
+app *Procreate*, the maximum allowed single dimension for an image is 16384 pixels;
+if an image exceeds this size, it will be scaled to fit.
 
 ## Command-line usage
 
