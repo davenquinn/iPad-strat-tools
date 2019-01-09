@@ -67,8 +67,6 @@ expect to recharge the iPad nightly.
 
 # Stitching together a production section
 
-<img width="300" style="float:right;" src="https://raw.githubusercontent.com/davenquinn/iPad-strat-tools/master/images/test-output.png" />
-
 After returning from the field, you'll want to standardize your sections,
 remove extraneous annotation, and make them conform to a consistent graphical
 style. This could mean artistic rendition and/or painting in patterns such as the
@@ -91,6 +89,8 @@ if an image exceeds this size, it will be scaled to fit.
 
 An example output image showing the impressive graphical power of GoodNotes is
 [included in this repository](images/test-output.png).
+
+<img width="120" style="float:right;" src="https://raw.githubusercontent.com/davenquinn/iPad-strat-tools/master/images/test-output.png" />
 
 ## Installation
 
