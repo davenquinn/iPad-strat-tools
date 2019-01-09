@@ -65,7 +65,7 @@ under load with the screen on a high brightness setting. A field notebook should
 be kept as a backup, and a power bank should be carried at all times. Users should
 expect to recharge the iPad nightly.
 
-# Stitching together a production section
+## Stitching together a production section
 
 After returning from the field, you'll want to standardize your sections,
 remove extraneous annotation, and make them conform to a consistent graphical
@@ -91,6 +91,8 @@ An example output image, combined from a 3-page PDF and showing the impressive g
 [included in this repository](images/test-output.png).
 
 <img width="120" style="float:right;" src="https://raw.githubusercontent.com/davenquinn/iPad-strat-tools/master/images/test-output.png" />
+
+# The `stack-section` command-line tool
 
 ## Installation
 
