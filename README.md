@@ -67,7 +67,7 @@ expect to recharge the iPad nightly.
 
 # Stitching together a production section
 
-<img width="300" style="float:right;" src="images/test-output.png" />
+<img width="300" style="float:right;" src="https://raw.githubusercontent.com/davenquinn/iPad-strat-tools/master/images/test-output.png" />
 
 After returning from the field, you'll want to standardize your sections,
 remove extraneous annotation, and make them conform to a consistent graphical
