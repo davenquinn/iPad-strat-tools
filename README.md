@@ -49,7 +49,7 @@ A new template optimized for your desired set of section axes can be made using
 the "Graph Paper" template in GoodNotes. Export your new PDF from GoodNotes and
 re-import it as a *Template* to use it as the basis for a notebook.
 
-## Using it in the field
+## Testing in the field
 
 We tested this stratigraphic measurement technique during summer 2018.
 Four teams with iPads measured ~5-10 sections over a 1.5-week field
@@ -64,7 +64,7 @@ under load with the screen on a high brightness setting. A field notebook should
 be kept as a backup, and a power bank should be carried at all times. Users should
 expect to recharge the iPad nightly.
 
-## Stitching together a production section
+# Stitching together a production section
 
 After returning from the field, you'll want to standardize your sections,
 remove extraneous annotation, and make them conform to a consistent graphical
@@ -78,7 +78,7 @@ of earlier code that I wrote for collating sections from scanned images of
 field notebook pages. However, the standard size and orientation of a digital
 notebook page makes extraction of images from GoodNotes far easier.
 
-The command line creates a tall image representing a completed section
+The `stack-section` tool creates a tall image representing a completed section
 from all of the pages in the pdf, which are assumed to move upwards through
 the section. Optionally, the image will be split into several equal parts of
 less than a certain pixel height. This is helpful when reasonably-sized images
@@ -86,9 +86,28 @@ are needed for loading into other software. For instance, for the iPad drawing
 app *Procreate*, the maximum allowed single dimension for an image is 16384 pixels;
 if an image exceeds this size, it will be scaled to fit.
 
-## Command-line usage
+An example output image showing the impressive graphical power of GoodNotes is
+[included in this repository](images/test-output.png).
 
-After installation, the command-line tool should be usable at te
+## Installation
+
+`stack-section` is a command-line application written in Python. Right now, the
+way to install it is to *clone* the Github repository to your local machine using
+```
+> git clone https://github.com/davenquinn/iPad-strat-tools.git
+```
+
+Then, install the module to your system:
+```
+> pip install -e iPad-strat-tools
+```
+
+Installation requires the `imagemagick` application to be available on your system,
+which can be tricky for windows users.
+![Documentation for the *Wand* Python module](docs.wand-py.org/en/0.5.0/guide/install.html)
+may suggest ways to solve this issue.
+
+## Command-line usage
 
 ```
 Usage: stack-section [OPTIONS] <pdf-input> <png-output>
