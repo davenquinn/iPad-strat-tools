@@ -1,10 +1,18 @@
+from __future__ import division
 import click
-from click import secho
+from click import secho, echo, style
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from io import BytesIO
 from PIL import Image
+from os import path
+from math import ceil
 # Wand is an `imagemagick` binding, so ImageMagick needs to be installed
 from wand.image import Image as WandImage
+
+def save_image(image, outfile):
+    echo(style(outfile, fg="green")
+        +" [{}x{}]".format(image.width, image.height))
+    image.save(outfile)
 
 @click.command(name='stack-section')
 @click.argument('infile', type=click.Path(exists=True))
@@ -12,8 +20,8 @@ from wand.image import Image as WandImage
 @click.option('--dpi', type=int, default=300, help="Dots per inch for conversion")
 @click.option('--clip-left', type=float, default=0, help="Left crop, in inches")
 @click.option('--clip-right', type=float, default=0, help="Right crop, in inches")
-@click.option('--split-threshold', type=int, help="Threshold to split output image")
-def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0, split_threshold=None):
+@click.option('--max-height', type=int, help="Threshold to split output image")
+def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0, max_height=None):
 
     secho(infile, fg='green')
 
@@ -65,4 +73,35 @@ def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0, split_threshold=Non
 
             surface.paste(cropped, ul)
 
-    surface.save(outfile)
+    # Split image if too tall
+    if not max_height or max_height > surface.height:
+        save_image(surface, outfile)
+        return
+
+    nsplits = ceil(surface.height/max_height)
+
+    echo("Splitting into {} parts".format(nsplits))
+
+    stem, ext = path.splitext(outfile)
+
+    split_size = ceil(surface.height/nsplits)
+
+    # iterate through splits from bottom to top
+    bottom = surface.height
+    top = bottom-split_size
+    i = 1
+    while bottom > 0:
+        # Fix last division if need be
+        if top < 0: top = 0
+
+        filename = stem + "_" + str(i) + ext
+        cropped = surface.crop((0,top,surface.width,bottom))
+
+        echo("Creating image {} of {}".format(i,nsplits))
+        save_image(cropped, filename)
+
+        bottom = top
+        top -= split_size
+        i+= 1
+
+    # Here we split into chunks less than the split threshold
