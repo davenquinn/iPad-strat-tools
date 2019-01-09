@@ -87,7 +87,7 @@ are needed for loading into other software. For instance, for the iPad drawing
 app *Procreate*, the maximum allowed single dimension for an image is 16384 pixels;
 if an image exceeds this size, it will be scaled to fit.
 
-An example output image showing the impressive graphical power of GoodNotes is
+An example output image, combined from a 3-page PDF and showing the impressive graphical power of GoodNotes, is
 [included in this repository](images/test-output.png).
 
 <img width="120" style="float:right;" src="https://raw.githubusercontent.com/davenquinn/iPad-strat-tools/master/images/test-output.png" />
