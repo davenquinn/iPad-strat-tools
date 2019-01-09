@@ -108,7 +108,7 @@ Then, install the module to your system:
 
 Installation requires the `imagemagick` application to be available on your system,
 which can be tricky for Windows users.
-![Documentation for the *Wand* Python module](docs.wand-py.org/en/0.5.0/guide/install.html)
+[Documentation for the *Wand* Python module](docs.wand-py.org/en/0.5.0/guide/install.html)
 may suggest ways to solve this issue.
 
 ## Command-line usage
