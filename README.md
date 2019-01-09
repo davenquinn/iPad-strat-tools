@@ -1,16 +1,44 @@
 # iPad-strat-tools
 
 This is a basic toolset for collecting stratigraphic data in the field
-on an iPad, and rendering a seamless high-resolution section that can
-be exported to other software such as Illustrator or Procreate more
-suited to precision drawing and preparation of publication-ready sections.
+on an iPad, and rendering a seamless high-resolution stratigraphic column
+that can be exported for publication or handed off to other software
+such as Illustrator or Procreate for completion.
 
-# Stratigraphic measurement in GoodNotes
+It includes a description of an iPad workflow for section-measuring,
+a set of PDF section axes to use as a GoodNotes template, and a command-line
+tool, `stack-section`, that stacks rendered section pages into a complete section. 
 
-A new template optimized for your measurement parameters can be made using the
+# The workflow: stratigraphic measurement in GoodNotes
+
+The iPad Pro, with its Apple Pencil, has the potential to completely change
+how we do field geology. One of the easiest ways to see its potential is to
+use it to measure a section in the field – gone are the days of tediously
+scanning your field notebook, massive layouts in Photoshop, and finicky graphics
+tablets. Or giant sheets of vellum.
+
+Stylus-enabled note-taking apps allow drawing like paper on a consistent set
+of axes, in an intuitive and robust way. They also support progressive enhancement
+in a way their Rite-in-the-Rain cousins cannot — by the time you're out of the
+field, you're much of the way to your publication-quality sections!
+
+[GoodNotes](https://www.goodnotes.com/) is one of the best note-taking apps
+we have encountered for the iPad, and the workflow described here is tailored to
+its use. Other note-taking apps like [Paper](https://paper.bywetransfer.com/)
+might also be useful, in which case the procedures and scripts
+
+## A standardized template
+
+Not having to re-label your axes every ~10-20 meters of stratigraphy is
+a huge time-saver in the field
+
+A basic PDF template for a stratigraphic column is included in this
+
+A new template optimized for your desired set of section axes can be made using the
 graph-paper preset in GoodNotes. Be sure to leave a one-large-box margin at the
 top and bottom of the section drawing area. If you want to change this margin,
-adjusting the script will be required.
+adjusting the script will be required. Export your new PDF from GoodNotes and
+re-import it as a *Template* to use it as the basis for a notebook.
 
 # Tool for stitching together a production section
 
@@ -36,18 +64,26 @@ to keep section images at the same scale for later use.
 
 ## Command-line usage
 
-```
-Usage: stack-section [OPTIONS] INFILE OUTFILE
+After installation, the command-line tool should be usable at te
 
-  Stack a section drawn on a cm-gridded GoodNotes template to a PNG image of
-  the whole section
+```
+Usage: stack-section [OPTIONS] <pdf-input> <png-output>
+
+  Stack a stratigraphic column drawn on multiple pages using a cm-gridded
+  GoodNotes template to composite png image(s) of the entire section.
+
+  <pdf-input> is a multipage PDF file
+      (presumably exported from GoodNotes).
+  <png-output> is a filename for the output PNG
+      (it will be suffixed with _1,_2, etc.
+      if output is split by --max-height).
 
 Options:
   --clip-left FLOAT        [cm] Left crop (default: 0)
   --clip-right FLOAT       [cm] Right crop (default: 0)
   --height-per-page FLOAT  [cm] Height of section on single page
                            (default: 15). Assumes that the section is centered
-                           relative to the drawing area on the page.
+                           on the vertical axis of the page.
   --dpi INTEGER            [px/inch] Resolution of output
                            (default: 300).
   --max-height INTEGER     [px] Threshold to split output image

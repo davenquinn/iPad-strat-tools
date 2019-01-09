@@ -20,7 +20,7 @@ help = {
     'clip-left': "Left crop (default: 0)",
     'clip-right': "Right crop (default: 0)",
     'height-per-page': "Height of section on single page (default: 15). Assumes that the "
-        "section is centered relative to the drawing area on the page.",
+        "section is centered on the vertical axis of the page.",
     'max-height': "Threshold to split output image if too tall (no default). If not specified, "
         "doesn't split the image at all. A value of <=16384 px allows the "
         "image to be imported without scaling into Procreate",
@@ -34,11 +34,9 @@ def option(*args, **kwargs):
     kwargs['help'] = style("["+unit+"] ", bold=True, fg='green')+text
     return click.option(*args, **kwargs)
 
-@click.command(name='stack-section',
-    help="Stack a section drawn on a cm-gridded GoodNotes template to a PNG image "
-         "of the whole section")
-@click.argument('infile', type=click.Path(exists=True))
-@click.argument('outfile', type=click.Path())
+@click.command(name='stack-section')
+@click.argument('infile', type=click.Path(exists=True), metavar='<pdf-input>')
+@click.argument('outfile', type=click.Path(), metavar='<png-output>')
 @option('--clip-left', type=float, default=0, unit="cm")
 @option('--clip-right', type=float, default=0, unit="cm")
 @option('--height-per-page', type=float, default=15, unit="cm")
@@ -46,6 +44,18 @@ def option(*args, **kwargs):
 @option('--max-height', type=int, unit='px')
 def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0,
         height_per_page=15, max_height=None):
+    """
+    Stack a stratigraphic column drawn on multiple pages using
+    a cm-gridded GoodNotes template to composite png image(s) of the entire
+    section.
+
+    \b
+    <pdf-input> is a multipage PDF file
+        (presumably exported from GoodNotes).
+    <png-output> is a filename for the output PNG
+        (it will be suffixed with _1,_2, etc.
+        if output is split by --max-height).
+    """
 
     secho(infile, fg='green')
 
