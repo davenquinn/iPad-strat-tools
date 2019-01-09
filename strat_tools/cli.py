@@ -6,6 +6,7 @@ from io import BytesIO
 from PIL import Image
 from os import path
 from math import ceil
+from textwrap import dedent
 # Wand is an `imagemagick` binding, so ImageMagick needs to be installed
 from wand.image import Image as WandImage
 
@@ -14,14 +15,37 @@ def save_image(image, outfile):
         +" [{}x{}]".format(image.width, image.height))
     image.save(outfile)
 
-@click.command(name='stack-section')
+
+help = {
+    'clip-left': "Left crop (default: 0)",
+    'clip-right': "Right crop (default: 0)",
+    'height-per-page': "Height of section on single page (default: 15). Assumes that the "
+        "section is centered relative to the drawing area on the page.",
+    'max-height': "Threshold to split output image if too tall (no default). If not specified, "
+        "doesn't split the image at all. A value of <=16384 px allows the "
+        "image to be imported without scaling into Procreate",
+    'dpi': "Resolution of output (default: 300)."
+}
+
+def option(*args, **kwargs):
+    key = args[0].replace("--","")
+    unit = kwargs.pop('unit')
+    text = help[key]
+    kwargs['help'] = style("["+unit+"] ", bold=True, fg='green')+text
+    return click.option(*args, **kwargs)
+
+@click.command(name='stack-section',
+    help="Stack a section drawn on a cm-gridded GoodNotes template to a PNG image "
+         "of the whole section")
 @click.argument('infile', type=click.Path(exists=True))
 @click.argument('outfile', type=click.Path())
-@click.option('--dpi', type=int, default=300, help="Dots per inch for conversion")
-@click.option('--clip-left', type=float, default=0, help="Left crop, in inches")
-@click.option('--clip-right', type=float, default=0, help="Right crop, in inches")
-@click.option('--max-height', type=int, help="Threshold to split output image")
-def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0, max_height=None):
+@option('--clip-left', type=float, default=0, unit="cm")
+@option('--clip-right', type=float, default=0, unit="cm")
+@option('--height-per-page', type=float, default=15, unit="cm")
+@option('--dpi', type=int, default=300, unit="px/inch")
+@option('--max-height', type=int, unit='px')
+def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0,
+        height_per_page=15, max_height=None):
 
     secho(infile, fg='green')
 
@@ -36,9 +60,10 @@ def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0, max_height=None):
 
         # The working area (with grid) is 17 boxes tall by 13 boxes wide
         n_boxes = (13,17)
+
         # section is 15 boxes high in the center of the image in our current
         # template
-        working_height = (n_boxes[1]-2)*pixels_per_box
+        working_height = height_per_page*pixels_per_box
         margin = (img.height-working_height)/2
         total_height = round(working_height*n+2*margin)
 
