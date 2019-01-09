@@ -8,5 +8,5 @@ setup(
     entry_points = {
         "console_scripts": ['stack-section = strat_tools.__main__:cli']
     },
-    install_requires=['click','pillow']
+    install_requires=['click','pillow', 'wand']
 )
