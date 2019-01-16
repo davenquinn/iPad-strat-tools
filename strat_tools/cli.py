@@ -1,7 +1,6 @@
 from __future__ import division
 import click
 from click import secho, echo, style
-from PyPDF2 import PdfFileReader, PdfFileWriter
 from io import BytesIO
 from PIL import Image
 from os import path
