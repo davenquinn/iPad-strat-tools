@@ -73,14 +73,15 @@ def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0,
         # section is 15 boxes high in the center of the image in our current
         # template
         working_height = height_per_page*pixels_per_box
+
         margin = (img.height-working_height)/2
-        total_height = round(working_height*n+2*margin)
+        total_height = int(round(working_height*n+2*margin))
 
         # Set right and left crop
         left = round(clip_left*dpi)
         right = round(clip_right*dpi)
 
-        width = img.width-left-right
+        width = int(img.width-left-right)
 
         surface = Image.new('RGBA', (width, total_height))
 
@@ -102,7 +103,7 @@ def cli(infile, outfile, dpi=300, clip_left=0, clip_right=0,
             cropped = img.crop((left, top, img.width-right, bottom))
             # The most this will ever be off from desired height
             # is half a pixel.
-            insert_height = round(working_height*(n-1-i)+top)
+            insert_height = int(round(working_height*(n-1-i)+top))
             ul = (0,insert_height)
 
             surface.paste(cropped, ul)
